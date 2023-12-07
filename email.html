@@ -1,0 +1,259 @@
+
+  
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Form</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family:Arial, Helvetica, sans-serif
+        }
+        .white{
+           width: 100vh;
+           height: 100vh;
+           position: absolute;
+        }
+        .green{
+            width: 900px;
+            height: 500px;
+            background-color: #009688;
+            position: relative;
+            padding: 50px;
+            left: 50%;
+            right: 60%;
+            margin-top: 50px;
+            border-radius: 30px;
+
+        }
+        #form{
+            font-size: 50px;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+
+        }
+        .nav-bar ul li {
+    list-style: none;
+}
+
+#navdiv {
+    display: flex;
+    justify-content: space-between;
+   
+   
+}
+
+.navitems ul li {
+    position: relative; /* Ensure the ::after pseudo-element is positioned relative to this li */
+    display: inline-block; /* Ensure the hover effect doesn't span the entire width */
+    margin-right: 30px;
+}
+
+.navitems ul li a {
+    
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.navitem{
+    display: flex;
+}
+
+.navitems ul li::after {
+    content: '';
+    height: 3px;
+    width: 0;
+    background: #009688;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: width 0.5s; /* Apply transition only to width */
+}
+
+.navitems ul li:hover::after {
+    width: 100%;
+}
+
+#logo {
+    font-size: 40px;
+    font-weight: 700;
+    cursor: pointer;
+   
+}
+
+.nav-bar{
+    
+
+   background-color: #000000;
+    height: 10vh;
+    width: 100%;
+    position: absolute;
+      
+    
+}
+
+.bg-dark {
+    background-color: #000000!important;
+    height: 71px;
+}
+
+         
+        
+    </style>
+</head>
+<body>
+
+    <section class="nav-bar">
+        <nav class="navbar bg-transparent navbar-expand sm navbar-dark " class="bg-dark" id="navdiv">
+         
+           <div class="logo"> <a href="#" class="navbar-brand" id="logo" style="margin-left: 60px;">H o T E L</a></div>
+           <div class="navitems" style="margin-left: 678px;"> <ul class="navbar -nav">
+            <li class="nav-item">
+                <a href="nav-link" class="">HOME</a>
+            </li>
+            <li class="nav-item">
+                <a href="nav-link" class="">BOOKINGS</a>
+            </li>
+            <li class="nav-item">
+                <a href="#abtus" class="">ABOUT US</a>
+            </li>
+            <li class="nav-item">
+                <a href="nav-link" class="">LOGIN</a>
+            </li>
+            <li class="nav-item">
+                <a href="nav-link" class="">CONTACT US</a>
+            </li>
+        </ul>
+    </div>
+    </nav>
+    <section class="white">
+        <div class="green">
+            <h2 id="form">F O R M</h2>
+            <form id="myForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            
+            <!-- Error Modal -->
+            <div class="modal" id="errorModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Error</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Success Modal -->
+            <div class="modal" id="successModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Success</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </section>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            const name = document.querySelector("#name");
+            const email = document.querySelector("#email");
+            const password = document.querySelector("#password");
+    
+            // Validate the fields
+            if (name.value.trim() === "" || email.value.trim() === "" || password.value.trim() === "") {
+                event.preventDefault();
+                showErrorModal("Please fill in all the fields.");
+            } else if (!isValidEmail(email.value.trim())) {
+                event.preventDefault();
+                showErrorModal("Please enter a valid email address.");
+            } else if (password.value.length < 8) {
+                event.preventDefault();
+                showErrorModal("Password must contain at least 8 characters.");
+            } else if (!containsUppercase(password.value)) {
+                event.preventDefault();
+                showErrorModal("Password must contain at least 1 uppercase character.");
+            } else {
+                event.preventDefault();
+                showSuccessModal("Form filled successfully!");
+                resetFormFields();
+            }
+        });
+    
+        function showErrorModal(message) {
+            $('#errorModal .modal-body').html(message);
+            $('#errorModal').modal('show');
+        }
+    
+        function showSuccessModal(message) {
+            $('#successModal .modal-body').html(message);
+            $('#successModal').modal('show');
+        }
+    
+        function resetFormFields() {
+            document.querySelector("#name").value = "";
+            document.querySelector("#email").value = "";
+            document.querySelector("#password").value = "";
+        }
+    
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    
+        function containsUppercase(password) {
+            return /[A-Z]/.test(password);
+        }
+    });
+    </script>
+
+
+
+</body>
+</html>
